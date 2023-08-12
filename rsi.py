@@ -67,7 +67,7 @@ def _rma_python(source: pd.Series, length: int) -> pd.Series:
     rma_list = [rma_value]
 
     for source_value in source_values:
-        rma_value = alpha * source_value + ((1 - alpha) * rma_value)
+        rma_value = alpha * source_value + (1 - alpha) * rma_value
         rma_list.append(rma_value)
 
     rma_series = pd.Series(
