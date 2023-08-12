@@ -85,3 +85,34 @@ def _rma_python(
 
     return rma_series
 
+def rma(
+    source: pd.Series,
+    length: int,
+    method: Literal["numpy", "pandas"] = "numpy"
+) -> np.ndarray | pd.Series:
+    """
+    Calculate the Relative Moving Average (RMA) of the input time series
+    data.
+
+    Parameters:
+    -----------
+    source : pandas.Series
+        The time series data to calculate the RMA for.
+    length : int
+        The number of periods to include in the RMA calculation.
+    method : {"numpy", "pandas"}, optional
+        The method to use for calculating the RMA, by default "numpy".
+
+    Returns:
+    --------
+    np.ndarray or pandas.Series
+        The calculated RMA time series data.
+    """
+    match method:
+        case "numpy":
+            return _rma_python(source, length)
+        case "pandas":
+            return _rma_pandas(source, length)
+        case _:
+            raise TypeError("method must be 'numpy' or 'pandas'")
+
