@@ -3,11 +3,7 @@ from typing import Literal
 import numpy as np
 import pandas as pd
 
-def _rma_pandas(
-    source: pd.Series,
-    length: int,
-    **kwargs
-) -> pd.Series:
+def _rma_pandas(source: pd.Series, length: int, **kwargs) -> pd.Series:
     """
     Calculate the Relative Moving Average (RMA) of the input time series
     data.
@@ -39,10 +35,7 @@ def _rma_pandas(
         .mean()
     ).rename("RMA")
 
-def _rma_python(
-    source: pd.Series,
-    length: int
-) -> pd.Series:
+def _rma_python(source: pd.Series, length: int) -> pd.Series:
     """
     Calculate the Relative Moving Average (RMA) of the input time series
     data using pure python.
@@ -116,10 +109,7 @@ def rma(
         case _:
             raise TypeError("method must be 'numpy' or 'pandas'")
 
-def rsi(
-    source: pd.Series,
-    length: int,
-) -> pd.Series:
+def rsi(source: pd.Series, length: int) -> pd.Series:
     """
     Calculate the Relative Strength Index (RSI) for a given time series
     data.
