@@ -65,9 +65,9 @@ def _rma_pandas(source: pd.Series, length: int, **kwargs) -> pd.Series:
     ).rename("RMA")
 ```
 
-At the start, it seemed that relying solely on .ewm might suffice for RMA calculations. Yet, an problem arose: the results only matched after around 20-30 values. It's clear that if aiming for alignment with TradingView values, these initial discrepancies introduce noticeable inaccuracies. 
+At the start, it seemed that relying solely on .ewm might suffice for RMA calculations. Yet, the results only matched after around 20-30 values. It's clear that if aiming for alignment with TradingView values, these initial discrepancies introduce noticeable inaccuracies. 
 
-To address this, I implemented _rma_python to calculate RMA formula via a loop. Initially, I worried this loop could cause lengthy execution times, particularly on lower timeframes like 1 minute. However, after testing it with 1.5 million rows, it proved fast enough, so I kept it. The reason for calling _rma_pandas within _rma_python is its precise calculation of the initial value, which is always an SMA. This approach helps avoid unnecessary code duplication. Also, I opted for these methods to be private to streamline user function calls. This maintains a resemblance to the TradingView version.
+To address this, I implemented `_rma_python` to calculate RMA formula via a loop. Initially, I worried this loop could cause lengthy execution times, particularly on lower timeframes like 1 minute. However, after testing it with 1.5 million rows, it proved fast enough, so I kept it. The reason for calling `_rma_pandas` within `_rma_python` is its precise calculation of the initial value, which is always an SMA. This approach helps avoid unnecessary code duplication. Also, I opted for these methods to be private to streamline user function calls. This maintains a resemblance to the TradingView version.
 
 ```python
 def _rma_python(source: pd.Series, length: int) -> pd.Series:
@@ -79,7 +79,7 @@ def _rma_python(source: pd.Series, length: int) -> pd.Series:
     rma_list = [rma_value]
 
     for source_value in source_values:
-        rma_value = alpha * source_value + ((1 - alpha) * rma_value)
+        rma_value = alpha * source_value + (1 - alpha) * rma_value
         rma_list.append(rma_value)
 
     rma_series = pd.Series(
