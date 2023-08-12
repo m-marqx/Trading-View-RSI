@@ -64,11 +64,11 @@ def _rma_python(source: pd.Series, length: int) -> pd.Series:
     source_values = source[length:].to_numpy().tolist()
 
     rma_value = float(source_pd.dropna().iloc[0])
+    rma_list = [rma_value]
 
-    rma_list = [rma_value] + [
-        rma_value := alpha * source_value + ((1 - alpha) * rma_value)
-        for source_value in source_values
-    ]
+    for source_value in source_values:
+        rma_value = alpha * source_value + ((1 - alpha) * rma_value)
+        rma_list.append(rma_value)
 
     rma_series = pd.Series(
         rma_list,
