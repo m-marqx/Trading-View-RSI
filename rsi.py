@@ -116,3 +116,36 @@ def rma(
         case _:
             raise TypeError("method must be 'numpy' or 'pandas'")
 
+def rsi(
+    source: pd.Series,
+    length: int,
+) -> pd.Series:
+    """
+    Calculate the Relative Strength Index (RSI) for a given time series
+    data.
+
+    Parameters:
+    -----------
+    source : pd.Series
+        The input time series data for which to calculate RSI.
+    length : int, optional
+        The number of length to use for RSI calculation, by default 14.
+
+    Returns:
+    --------
+    pd.Series
+        The calculated RSI values for the input data.
+    """
+    upward_diff = pd.Series(
+        np.maximum(source - source.shift(1), 0.0)
+    ).dropna()
+
+    downward_diff = pd.Series(
+        np.maximum(source.shift(1) - source, 0.0)
+    ).dropna()
+
+
+    relative_strength = rma(upward_diff, length) / rma(downward_diff, length)
+
+    rsi_series = 100 - (100 / (1 + relative_strength))
+    return rsi_series.rename("RSI")
