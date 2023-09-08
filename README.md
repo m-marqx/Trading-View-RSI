@@ -1,6 +1,11 @@
+# Warning
+
+This repo has been archived because it will now be maintained by the [TradingView Indicators](https://github.com/m-marqx/TradingView-Indicators) library.
+
+## Objective
 The purpose of this repository is to serve as a model for RSI calculation. When using the RMA calculation with the `.ewm` method in pandas, the initial results differ from those in TradingView. To address this, the solution involves manual calculation based on the Pinescript formula:
 
-# RSI
+## RSI Construction
 
 ```python
 pine_rsi(x, y) => 
@@ -40,7 +45,8 @@ def rsi(source: pd.Series, length: int) -> pd.Series:
     return rsi_series.rename("RSI")
 ```
 
-# RMA
+## RMA Construction
+
 
 In the RMA tradingview documentation, the alpha is "1/length" as seen below:
 
